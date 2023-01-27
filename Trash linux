@@ -1,0 +1,23 @@
+Создаём скрипт trash.sh в домашней директории пользователя примерно следующего содержания:
+
+#!/bin/sh
+TRASH_DIR="/tmp/trash"
+TIMESTAMP=`date +'%d-%b-%Y-%H:%M:%S'`
+for i in $*; do
+  FILE=`basename $i`
+  mv $i ${TRASH_DIR}/${FILE}.${TIMESTAMP}
+done
+
+Создайте директорию для корзины:
+# mkdir /tmp/trash
+
+Добавьте в .bashrc новый алиас:
+alias rm='sh ~/trash.sh'
+
+Перечитайте .bashrc:
+# source ~/.bashrc
+
+Теперь при удалении файла:
+# rm filename.txt
+он будет помещаться в /tmp/trash, а к имени будет добавляться маска с датой и временем:
+filename.txt.26-Jan-2023-17:38:01
